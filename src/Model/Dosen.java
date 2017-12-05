@@ -7,6 +7,9 @@ package Model;
 
 import java.util.Date;
 
+//import java.sql.Date;
+
+
 /**
  *
  * @author vebbyclrs
@@ -17,19 +20,26 @@ public class Dosen {
     private Date tglLahir;
     private String tempatLahir;
     private String alamat;
-    private boolean isMale;
+    private int isMale;
     private long noHp;
+    private String username;
+    private String password;
+    private String email;
 
-    public Dosen() {
-    }
-    public Dosen(int kode, String nama, boolean isMale) {
+
+    public Dosen(int kode, String nama, Date tglLahir, String tempatLahir, String alamat, int isMale, long noHp, String email, String password) {
         this.kode = kode;
         this.nama = nama;
+        this.tglLahir = tglLahir;
+        this.tempatLahir = tempatLahir;
+        this.alamat = alamat;
         this.isMale = isMale;
+        this.noHp = noHp;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setTglLahir(int tanggal, int bulan, int tahun) {
-        this.tglLahir = new Date(tahun-1900, bulan-1, tanggal);
+    public Dosen() {
     }
 
     public Date getTglLahir() {
@@ -64,17 +74,26 @@ public class Dosen {
         return alamat;
     }
 
+    public void setTglLahir(Date tanggalLahir) {
+        this.tglLahir = tanggalLahir;
+    }
+    
+    public void setTglLahir(int tanggal, int bulan, int tahun) {
+        this.tglLahir = new Date(tahun-1900,bulan-1,tanggal);
+    }
+
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
 
-    public boolean isIsMale() {
+    public int getIsMale() {
         return isMale;
     }
 
-    public void setIsMale(boolean isMale) {
+    public void setIsMale(int isMale) {
         this.isMale = isMale;
     }
+
 
     public long getNoHp() {
         return noHp;
@@ -83,4 +102,29 @@ public class Dosen {
     public void setNoHp(long noHp) {
         this.noHp = noHp;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
 }

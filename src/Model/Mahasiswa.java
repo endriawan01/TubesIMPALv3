@@ -5,8 +5,9 @@
  */
 package Model;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -17,33 +18,40 @@ public class Mahasiswa {
     private int totalSKS; //di awal di set 0
     private long nim;
     private String nama;
-    private boolean isMale;
+    private int isMale;
     private Date tanggalLahir;
     private String tempatLahir;
     private String alamat;
 //    private float ipk;
     private long noHp;
     private int angkatan;
-    private boolean statusPembayaran;
-    private Dosen dosenWali;
+    private int statusPembayaran;
+    private Dosen dosenWali = new Dosen();
     private ArrayList<Jadwal> jadwal;
-    private String email;
+    private String username;
     private String password;
 
-    public Mahasiswa(String nama, boolean isMale, int tglLahir, int bulanLahir, int tahunLahir, String tempatLahir) {
-        this.nim = ++totalMahasiswa;
-        this.nama = nama;
-        this.isMale = isMale;
-        setTanggalLahir(tglLahir, bulanLahir, tahunLahir);
-        this.tempatLahir = tempatLahir;
-        this.totalSKS = 0;
-        jadwal = new ArrayList<>();
+    public Mahasiswa() {
     }
 
-    public Mahasiswa(long nim, String nama, boolean isMale, 
+    public Mahasiswa(long nim, String nama, int isMale, Date tanggalLahir, String tempatLahir, String alamat, long noHp, int angkatan, Dosen dosenWali, String username, String password) {
+        this.nim = nim;
+        this.nama = nama;
+        this.isMale = isMale;
+        this.tanggalLahir = tanggalLahir;
+        this.tempatLahir = tempatLahir;
+        this.alamat = alamat;
+        this.noHp = noHp;
+        this.angkatan = angkatan;
+        this.dosenWali = dosenWali;
+        this.username = username;
+        this.password = password;
+    }
+
+    public Mahasiswa(long nim, String nama, int isMale, 
             Date tanggalLahir, String tempatLahir, String alamat, 
-            long noHp, int angkatan, boolean statusPembayaran,
-            int totalSKS,  int dosenWali, String email, 
+            long noHp, int angkatan, int statusPembayaran,
+            int totalSKS,  int dosenWali, String username, 
             String password) {
         this.totalSKS = totalSKS;
         this.nim = nim;
@@ -55,21 +63,57 @@ public class Mahasiswa {
         this.noHp = noHp;
         this.angkatan = angkatan;
         this.statusPembayaran = statusPembayaran;
-//        this.dosenWali.setKode(dosenWali);
-        this.email = email;
+        this.dosenWali.setKode(dosenWali);
+        this.username = username;
         this.password = password;
     }
-    
-    public String getEmail() {
-        return email;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    
+    
+    public static int getTotalMahasiswa() {
+        return totalMahasiswa;
+    }
+
+    public static void setTotalMahasiswa(int totalMahasiswa) {
+        Mahasiswa.totalMahasiswa = totalMahasiswa;
+    }
+
+    public ArrayList<Jadwal> getJadwal() {
+        return jadwal;
+    }
+    
+    public void setJadwal(ArrayList<Jadwal> jadwal) {
+        this.jadwal = jadwal;
+    }
+    
+    
+    
+    public String username() {
+        return username;
+    }
+
+    public void username(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public int isIsMale() {
+        return isMale;
+    }
+
+    public Date getTanggalLahir() {
+        return tanggalLahir;
     }
 
     public void setPassword(String password) {
@@ -78,17 +122,12 @@ public class Mahasiswa {
     public void setNim(long nim) {
         this.nim = nim;
     }
-    
-    public ArrayList<Jadwal> getAllJadwal () {
-        return this.jadwal;
-    }
 
-    public final void setTanggalLahir(int tanggal, int bulan, int tahun) {
-        this.tanggalLahir = new Date(tahun-1900,bulan-1,tanggal);
+    public void setTanggalLahir(Date tanggalLahir) {
+        this.tanggalLahir = tanggalLahir;
     }
-    public Date getTanggalLahir () {
-        return tanggalLahir;
-    }
+    
+    
 
     public int getTotalSKS() {
         return totalSKS;
@@ -126,11 +165,11 @@ public class Mahasiswa {
         this.nama = nama;
     }
 
-    public boolean IsMale() {
+    public int IsMale() {
         return isMale;
     }
 
-    public void setIsMale(boolean isMale) {
+    public void setIsMale(int isMale) {
         this.isMale = isMale;
     }
     public String getTempatLahir() {
@@ -165,11 +204,11 @@ public class Mahasiswa {
         this.angkatan = angkatan;
     }
 
-    public boolean isStatusPembayaran() {
+    public int isStatusPembayaran() {
         return statusPembayaran;
     }
 
-    public void setStatusPembayaran(boolean statusPembayaran) {
+    public void setStatusPembayaran(int statusPembayaran) {
         this.statusPembayaran = statusPembayaran;
     }
 }

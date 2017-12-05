@@ -17,14 +17,15 @@ import javax.swing.JOptionPane;
  *
  * @author VebbyClrs
  */
-public class ContrLoginDosen implements ActionListener,KeyListener  {
+public class ContrLoginAdmin implements ActionListener,KeyListener  {
 
-    VLoginDosen view;
+    VLoginAdmin view;
     Aplikasi apk;
-    VLoginAdmin viAdmin;
-    VLoginMahasiswa viMhs;
+    ContrAdmin selfContr;
+    ContrLoginDosen loginDosenContr;
+    ContrLoginMahasiswa loginMhsContr;
 
-    public ContrLoginDosen() {
+    public ContrLoginAdmin() {
         
         try
         {
@@ -40,66 +41,56 @@ public class ContrLoginDosen implements ActionListener,KeyListener  {
         {
             ex.printStackTrace();
         }
-        view = new VLoginDosen();
+        view = new VLoginAdmin();
         apk = new Aplikasi();
         view.setVisible(true);
         view.setLocationRelativeTo(null);
-        
         view.setActionListener(this);
         view.setKeyListener(this);
+        
     }
     
-    public  void btnLoginActionPerformed(ActionEvent ae) /*DONE*/{
+    public  void btnLoginActionPerformed(ActionEvent ae) {
         System.out.println("btnLoginPerformed!!!!!");
-        String email = view.getTxtUserName();
-        String pass = view.getTxtPassword();
-//        System.out.println( username);
-//        System.out.println( pass);
+        String email = view.getTxtUserName().getText();
+        String pass = view.getTxtPassword().getText();
         
         try {
-
-            Dosen dsn = apk.getDosenByUsername(email);
-//            System.out.println(dsn.getKode());
-//            System.out.println(dsn.getUsername());
-            if (dsn == null ){
-                JOptionPane.showMessageDialog(viAdmin, "Pengguna tidak ditemukan", "Login gagal", JOptionPane.ERROR_MESSAGE);
+            Admin adm = apk.getAdminByUsername(email);
+            if (adm == null) {
+                view.showMessage("PENGGUNA TIDAK DITEMUKAN");
             } else {
-
-                if (dsn.getPassword().equals(pass)) {
-                   view.setVisible(false);
-                    new ContrDosen(dsn);
-                } else {
+                if ( adm.getPassword().equals(pass)) {
                     view.setVisible(false);
-                    ContrDosen in = new ContrDosen(dsn);
-
+                    selfContr = new ContrAdmin();
+                } else {
+                    view.showMessage("PASSWORD SALAH!");
                 }
             }
         } catch (Exception e) {
-            //throw new IllegalArgumentException("gagal Masuk");
-            JOptionPane.showMessageDialog(view, e.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+    }
+    
+    public void btnLoginDosenActionPerformed(ActionEvent ae) {
+        System.out.println("btnLoginDosenPerformed!!!!!");
+        view.setVisible(false);
+        loginDosenContr = new ContrLoginDosen();
     }
     
     public void btnLoginMhsActionPerformed (ActionEvent ae) {
         System.out.println("btnLoginMhsPerformed!!!!!");
         view.setVisible(false);
-        new ContrLoginMahasiswa();
-    }
-    
-    public void btnLoginAdminActionPerformed (ActionEvent ae) {
-        System.out.println("btnLoginAdminActionPerformed!!!!!");
-        view.setVisible(false);
-        new ContrLoginAdmin();
+        loginMhsContr = new ContrLoginMahasiswa();
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(view.getBtnMasuk())) {
             btnLoginActionPerformed(e);
-        } else if (e.getSource().equals(view.getBtnLoginAdmin())) {
-            btnLoginAdminActionPerformed(e);
-        } else if (e.getSource().equals(view.getBtnLoginMahasiswa())) {
+        } else if (e.getSource().equals(view.getBtnLoginDosen())) {
+            btnLoginDosenActionPerformed(e);
+        } else if (e.getSource().equals(view.getBtnLoginMhs())) {
             btnLoginMhsActionPerformed(e);
         }
     }
@@ -110,8 +101,8 @@ public class ContrLoginDosen implements ActionListener,KeyListener  {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {        
-        if (e.getSource().equals(view.getTxtPassword())) {
+    public void keyPressed(KeyEvent e) {
+        if ((e.getSource().equals(view.getTxtPassword())) || (e.getSource().equals(view.getTxtUserName()))) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 btnLoginActionPerformed(null);
             }
